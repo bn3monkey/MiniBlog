@@ -13,7 +13,7 @@ class Window extends StatefulWidget {
 }
 
 class _WindowState extends State<Window> {
-  WindowName current_name = WindowName.USER;
+  WindowName current_name = WindowName.MAIN;
 
   void _changeWindow(WindowName target_window) {
     setState(() {

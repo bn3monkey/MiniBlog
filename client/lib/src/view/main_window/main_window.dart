@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './main_window_name.dart';
 import '../window_name.dart';
 
 class MainWindow extends StatefulWidget {
@@ -9,8 +10,6 @@ class MainWindow extends StatefulWidget {
   @override
   _MainWindowState createState() => _MainWindowState();
 }
-
-enum MainContentName { EMPTY, LIST, WRITE, RETREIVE }
 
 class _MainWindowState extends State<MainWindow> {
   MainContentName current_name = MainContentName.EMPTY;
