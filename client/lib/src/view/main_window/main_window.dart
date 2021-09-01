@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import './main_window_name.dart';
 import '../window_name.dart';
+import 'header_view/header_view.dart';
+import 'content_view/content_view.dart';
 
 class MainWindow extends StatefulWidget {
   MainWindow({Key? key, required this.onWindowChanged}) : super(key: key);
@@ -22,19 +24,16 @@ class _MainWindowState extends State<MainWindow> {
 
   @override
   Widget build(BuildContext context) {
-    switch (current_name) {
-      case MainContentName.EMPTY:
-        return Container(color: Colors.blueAccent);
-        break;
-      case MainContentName.LIST:
-        return Container(color: Colors.blueGrey);
-        break;
-      case MainContentName.WRITE:
-        return Container(color: Colors.lightBlue);
-        break;
-      case MainContentName.RETREIVE:
-        return Container(color: Colors.lightBlueAccent);
-        break;
-    }
+    return Column(
+      children: [
+        HeaderView(
+          onWindowChanged: widget.onWindowChanged,
+        ),
+        Expanded(
+            child: ContentView(
+          onWindowChanged: widget.onWindowChanged,
+        ))
+      ],
+    );
   }
 }
