@@ -25,10 +25,10 @@ class _WindowState extends State<Window> {
   Widget build(BuildContext context) {
     switch (current_name) {
       case WindowName.MAIN:
-        return MainWindow(onWindowChanged: _changeWindow);
+        return MainWindow();
         break;
       case WindowName.USER:
-        return UserWindow(onWindowChanged: _changeWindow);
+        return UserWindow();
         break;
     }
   }

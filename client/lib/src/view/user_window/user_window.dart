@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import '../window_name.dart';
 
 class UserWindow extends StatefulWidget {
-  UserWindow({Key? key, required this.onWindowChanged}) : super(key: key);
-
-  final ChangeWindowCallback onWindowChanged;
+  UserWindow({Key? key}) : super(key: key);
 
   @override
   _UserWindowState createState() => _UserWindowState();
