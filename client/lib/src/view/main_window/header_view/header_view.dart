@@ -7,14 +7,23 @@ class HeaderView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double parent_height = MediaQuery.of(context).size.height * 0.2;
+    double upper_header_height = parent_height * 0.7;
     return Container(
-      height: MediaQuery.of(context).size.height * 0.2,
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: const AssetImage('image/banner.png'),
-          fit: BoxFit.cover,
+        height: parent_height,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: const AssetImage('image/banner.png'),
+            fit: BoxFit.cover,
+          ),
         ),
-      ),
-    );
+        child : Column(
+          children : <Widget>[
+            UpperHeaderView(
+              height : upper_header_height,
+            ),
+          ]
+        ),
+      );
   }
 }

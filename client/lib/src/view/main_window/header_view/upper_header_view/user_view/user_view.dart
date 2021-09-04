@@ -1,35 +1,40 @@
 import 'package:flutter/material.dart';
 
 class UserView extends StatefulWidget {
-  UserView({Key? key, required this.onWindowChanged}) : super(key: key);
-
-  final ChangeWindowCallback onWindowChanged;
+  UserView({Key? key, required this.size}) : super(key: key);
+  final double size;
 
   @override
-  _MainWindowState createState() => _MainWindowState();
+  _UserViewState createState() => _UserViewState();
 }
 
-class _MainWindowState extends State<MainWindow> {
-  MainContentName current_name = MainContentName.EMPTY;
+class _UserViewState extends State<UserView> {
+  String path = "";
 
-  void _changeContent(MainContentName name) {
+  void _changeIcon(String path) {
     setState(() {
-      current_name = name;
+      this.path = path;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        HeaderView(
-          onWindowChanged: widget.onWindowChanged,
-        ),
-        Expanded(
-            child: ContentView(
-          onWindowChanged: widget.onWindowChanged,
-        ))
-      ],
+    double size = widget.size;
+    return Container(
+      width : size,
+      height : size,
+      decoration : const BoxDecoration(
+        color : Colors.white,
+        shape : BoxShape.circle
+      ),
+      child : Container(
+        width : size * 0.2,
+        height : size * 0.2,
+        decoration : const BoxDecoration(
+          color : Colors.white,
+          shape : BoxShape.circle
+        )
+      )
     );
   }
 }
