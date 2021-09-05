@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'title_view/title_view.dart';
 import 'user_view/user_view.dart';
 
 class UpperHeaderView extends StatelessWidget {
@@ -7,24 +8,43 @@ class UpperHeaderView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double user_view_size = height/2.0;
+    double user_view_size = height/3.0;
     return Container(
         height : this.height,
         decoration : const BoxDecoration(
           color : Color.fromRGBO(0, 0, 0, 0.5),
         ),
-        child : Stack(
+        child : Column(
           children : <Widget>[
-            Positioned(
-              right : 0, 
-              top : 0, 
-              child : 
-              UserView(
-                size : user_view_size
-                )
-              ),
-            ],
-        ), 
+            // Left : Title View - Right : Search View & User View
+            Row(
+              children : <Widget>[
+                // Title View
+                Expanded(
+                  child : Padding(
+                    padding: EdgeInsets.all(5),
+                    child : TitleView(),
+                  )
+                ),
+                // Serach View
+                Container(),
+                // User View
+                Padding(
+                  padding: EdgeInsets.all(5),
+                  child : UserView(
+                    size : user_view_size
+                  ),
+                ),                
+              ]
+            ),
+            // Right : Section View
+            Row(
+              children : <Widget>[
+                
+              ]
+            )
+          ]
+        )
     );
   }
 }
