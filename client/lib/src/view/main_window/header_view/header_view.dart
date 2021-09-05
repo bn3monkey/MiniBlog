@@ -7,10 +7,11 @@ class HeaderView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double parent_height = MediaQuery.of(context).size.height * 0.2;
-    double upper_header_height = parent_height * 0.7;
+    double screen_height = MediaQuery.of(context).size.height * 0.2;             
+    double height = screen_height > 100.0 ? screen_height : 100.0;
+    double upper_header_height = height * 0.7;
     return Container(
-        height: parent_height,
+        height: height,
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: const AssetImage('image/banner.png'),

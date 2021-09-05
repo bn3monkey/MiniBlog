@@ -8,7 +8,7 @@ class UpperHeaderView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double user_view_size = height/3.0;
+    double top_column_size = height/3.0;
     return Container(
         height : this.height,
         decoration : const BoxDecoration(
@@ -23,7 +23,9 @@ class UpperHeaderView extends StatelessWidget {
                 Expanded(
                   child : Padding(
                     padding: EdgeInsets.all(5),
-                    child : TitleView(),
+                    child : TitleView(
+                      size : top_column_size
+                    ),
                   )
                 ),
                 // Serach View
@@ -32,7 +34,7 @@ class UpperHeaderView extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.all(5),
                   child : UserView(
-                    size : user_view_size
+                    size : top_column_size
                   ),
                 ),                
               ]
