@@ -14,6 +14,9 @@ class Window extends StatefulWidget {
 class _WindowState extends State<Window> {
   @override
   Widget build(BuildContext context) {
-    return MainWindow();
+    return Scaffold(
+      appBar: null,
+      body: MainWindow(),
+    );
   }
 }

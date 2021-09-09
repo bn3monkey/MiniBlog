@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:client/src/icon/korea_monkey_icons.dart';
+import 'package:client/src/widget/circle_border_button.dart';
 
 class UserView extends StatefulWidget {
   UserView({Key? key, required this.size}) : super(key: key);
@@ -20,21 +22,8 @@ class _UserViewState extends State<UserView> {
   @override
   Widget build(BuildContext context) {
     double size = widget.size;
-    return Container(
-      width : size,
-      height : size,
-      decoration : const BoxDecoration(
-        color : Colors.white,
-        shape : BoxShape.circle
-      ),
-      child : Container(
-        width : size * 0.2,
-        height : size * 0.2,
-        decoration : const BoxDecoration(
-          color : Colors.white,
-          shape : BoxShape.circle
-        )
-      )
-    );
+    return CircleBorderButton(
+        size: size,
+        child: Icon(KoreaMonkey.info, color: Colors.white, size: 0.9 * size));
   }
 }
