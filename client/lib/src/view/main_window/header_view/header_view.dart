@@ -10,6 +10,7 @@ class HeaderView extends StatelessWidget {
     double screen_height = MediaQuery.of(context).size.height * 0.2;             
     double height = screen_height > 100.0 ? screen_height : 100.0;
     double upper_header_height = height * 0.7;
+    double tag_view_height = height - upper_header_height;
     return Container(
         height: height,
         decoration: const BoxDecoration(
@@ -23,7 +24,9 @@ class HeaderView extends StatelessWidget {
             UpperHeaderView(
               height : upper_header_height,
             ),
-            TagView(height : ,)
+            TagView(
+              height : tag_view_height, 
+            )
           ]
         ),
       );
