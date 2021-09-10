@@ -23,6 +23,7 @@ class HeaderView extends StatelessWidget {
             UpperHeaderView(
               height : upper_header_height,
             ),
+            TagView(height : ,)
           ]
         ),
       );
