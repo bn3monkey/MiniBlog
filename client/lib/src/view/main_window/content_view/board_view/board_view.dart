@@ -12,6 +12,15 @@ class BoardView extends StatefulWidget {
 class _BoardViewState extends State<BoardView> {
   @override
   Widget build(BuildContext context) {
-    return Container(color: Colors.white);
+    //return ListView.builder(
+    //itemCount : data.length
+    // itemBuilder : (context, int index) {
+    //  return getBoard(context, index);
+    // }
+    //)
+  }
+
+  Widget getBoard(BuildContext context, int index) {
+    return Container();
   }
 }
