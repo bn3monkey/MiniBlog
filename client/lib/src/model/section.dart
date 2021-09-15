@@ -1,11 +1,17 @@
 class Section {
-  Section({required this.datas});
+  Section({required this.items});
 
   int selected = -1;
-  final List<String> datas;
+  final List<String> items;
 
-  String get(int idx) {
-    return datas[idx];
+  int get length => items.length;
+
+  String operator [](int idx) {
+    return items[idx];
+  }
+
+  operator []=(int idx, String value) {
+    if (0 <= idx && idx < items.length) items[idx] = value;
   }
 
   void select(int idx) {

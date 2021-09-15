@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:client/src/model/tag.dart';
 
 class TagView extends StatefulWidget {
   TagView({Key? key, required this.height}) : super(key: key);
 
   final double height;
-  List<String> items = ["TAG1", "TAG2", "TAG3"];
-  List<bool> is_selected = [false, false, false];
+  final Tag tag = Tag(items: ["TAG1", "TAG2", "TAG3", "TAG4"]);
 
   @override
   _TagViewState createState() => _TagViewState();
@@ -14,12 +14,8 @@ class TagView extends StatefulWidget {
 class _TagViewState extends State<TagView> {
   void select(int idx) {
     setState(() {
-      widget.is_selected[idx] = !widget.is_selected[idx];
+      widget.tag.select(idx);
     });
-  }
-
-  bool isSelected(int idx) {
-    return widget.is_selected[idx];
   }
 
   @override
@@ -27,14 +23,14 @@ class _TagViewState extends State<TagView> {
     double height = widget.height;
     double button_height = height * 0.7;
     double text_size = height * 0.4;
-    var items = widget.items;
+    var tag = widget.tag;
 
     return Container(
         height: height,
         alignment: Alignment.center,
         child: Row(
-            children: List<Widget>.generate(items.length, (idx) {
-          double opacity = isSelected(idx) ? 1.0 : 0.5;
+            children: List<Widget>.generate(tag.length, (idx) {
+          double opacity = tag.isSelected(idx) ? 1.0 : 0.5;
 
           return Container(
             height: button_height,
@@ -51,7 +47,7 @@ class _TagViewState extends State<TagView> {
                   borderRadius: BorderRadius.circular(10),
                 )),
               ),
-              child: Text(items[idx],
+              child: Text(tag[idx],
                   style: TextStyle(
                     color: Colors.white.withOpacity(opacity),
                     fontSize: text_size,

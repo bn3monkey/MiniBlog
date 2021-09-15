@@ -45,9 +45,9 @@ class UpperHeaderView extends StatelessWidget {
             ),
           ]),
           // Right : Section View
-          Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-            SectionView(height: bottom_column_size, items: sections)
-          ]),
+          Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [SectionView(height: bottom_column_size)]),
         ]));
   }
 }
