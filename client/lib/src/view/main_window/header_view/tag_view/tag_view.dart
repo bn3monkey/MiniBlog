@@ -7,6 +7,9 @@ class TagView extends StatefulWidget {
   final double height;
   final Tag tag = Tag(items: ["TAG1", "TAG2", "TAG3", "TAG4"]);
 
+  late double button_height = height * 0.7;
+  late double text_size = height * 0.4;
+
   @override
   _TagViewState createState() => _TagViewState();
 }
@@ -22,39 +25,54 @@ class _TagViewState extends State<TagView> {
   Widget build(BuildContext context) {
     double height = widget.height;
     double button_height = height * 0.7;
-    double text_size = height * 0.4;
     var tag = widget.tag;
 
     return Container(
-        height: height,
-        alignment: Alignment.center,
-        child: Row(
-            children: List<Widget>.generate(tag.length, (idx) {
-          double opacity = tag.isSelected(idx) ? 1.0 : 0.5;
+      height: height,
+      child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: tag.length,
+          itemBuilder: (context, int index) {
+            bool isSelected = tag.isSelected(index);
+            String text = tag[index];
 
-          return Container(
-            height: button_height,
-            padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-            child: OutlinedButton(
-              onPressed: () {
-                select(idx);
-              },
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(
-                    Colors.green.withOpacity(opacity)),
-                shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                  side: BorderSide(color: Colors.white.withOpacity(opacity)),
-                  borderRadius: BorderRadius.circular(10),
-                )),
+            return Container(
+              height: button_height,
+              padding: const EdgeInsets.only(
+                  left: 10.0, right: 10.0, top: 5.0, bottom: 5.0),
+              child: OutlinedButton(
+                onPressed: () {
+                  select(index);
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      isSelected ? Color(0xaa3BDC9A) : Colors.transparent),
+                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                    side: BorderSide(
+                        width: 2.0,
+                        color: isSelected
+                            ? Colors.white
+                            : Colors.white.withOpacity(0.5),
+                        style: BorderStyle.solid),
+                    borderRadius: BorderRadius.circular(12),
+                  )),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.only(left: 25.0, right: 25.0),
+                  child: Text(text,
+                      style: TextStyle(
+                        color: isSelected
+                            ? Colors.white
+                            : Colors.white.withOpacity(0.5),
+                        fontSize: 15,
+                        fontFamily: 'NotoSans',
+                        fontWeight: FontWeight.w400,
+                      ),
+                      textAlign: TextAlign.center),
+                ),
               ),
-              child: Text(tag[idx],
-                  style: TextStyle(
-                    color: Colors.white.withOpacity(opacity),
-                    fontSize: text_size,
-                  ),
-                  textAlign: TextAlign.center),
-            ),
-          );
-        }).toList()));
+            );
+          }),
+    );
   }
 }

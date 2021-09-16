@@ -24,6 +24,7 @@ class _SectionViewState extends State<SectionView> {
 
     return Row(
         children: List<Widget>.generate(section.length, (idx) {
+      bool isSelected = section.isSelected(idx);
       return Container(
         padding: const EdgeInsets.only(left: 10.0, right: 10.0),
         child: TextButton(
@@ -32,10 +33,10 @@ class _SectionViewState extends State<SectionView> {
           },
           child: Text(section[idx],
               style: TextStyle(
-                color: Colors.white
-                    .withOpacity(section.isSelected(idx) ? 1.0 : 0.8),
-                fontSize: height,
-              ),
+                  color: Colors.white.withOpacity(isSelected ? 1.0 : 0.7),
+                  fontSize: height,
+                  fontFamily: 'NotoSans',
+                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400),
               textAlign: TextAlign.center),
         ),
       );

@@ -37,11 +37,19 @@ class _SearchViewState extends State<SearchView> {
               child: Padding(
                 padding: EdgeInsets.only(right: height / 2),
                 child: TextField(
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: height / 2,
+                      fontFamily: 'NotoSans',
+                      fontWeight: FontWeight.w400,
+                    ),
                     textAlign: TextAlign.start,
                     decoration: InputDecoration.collapsed(
                         hintStyle: TextStyle(
                           color: Colors.white.withOpacity(0.8),
                           fontSize: height / 2,
+                          fontFamily: 'NotoSans',
+                          fontWeight: FontWeight.w300,
                         ),
                         hintText: "검색어를 입력하세요.")),
               ),
