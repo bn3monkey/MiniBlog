@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'main_window/main_window.dart';
 import 'user_window/user_window.dart';

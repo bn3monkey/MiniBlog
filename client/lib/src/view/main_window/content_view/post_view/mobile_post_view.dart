@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:client/src/model/post_head.dart';
+import 'package:client/src/auxiliary/asset_path.dart';
 
 class MobilePostView {
   MobilePostView({required this.post_head, required this.width});
@@ -10,11 +11,11 @@ class MobilePostView {
   late double thumbnail_height = thumbnail_width * 0.6;
   late double horizontal_padding = (width - thumbnail_width) / 2.5;
 
-  Widget getThumbnailView() {
+  Widget getThumbnailView(BuildContext context) {
     return Container(
       alignment: Alignment.center,
       child: Image.asset(
-        post_head.thumbnail,
+        AssetPath.to(context, post_head.thumbnail),
         height: thumbnail_height,
         width: thumbnail_width,
         fit: BoxFit.fill,
@@ -121,7 +122,7 @@ class MobilePostView {
         padding:
             EdgeInsets.only(top: 20.0, bottom: 20.0, left: 20.0, right: 20.0),
         child: Column(children: [
-          getThumbnailView(),
+          getThumbnailView(context),
           getInfoView(),
         ]));
   }

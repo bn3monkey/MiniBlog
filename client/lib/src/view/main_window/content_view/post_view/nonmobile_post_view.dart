@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:client/src/model/post_head.dart';
+import 'package:client/src/auxiliary/asset_path.dart';
 
 class NonMobilePostView {
   NonMobilePostView({required this.post_head});
@@ -15,12 +16,12 @@ class NonMobilePostView {
   static const bottom_vertical_ratio =
       10 - top_vertical_ratio - middle_vertical_ratio;
 
-  Widget getThumbnailView() {
+  Widget getThumbnailView(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(left: 20.0, right: 20.0),
       alignment: Alignment.center,
       child: Image.asset(
-        post_head.thumbnail,
+        AssetPath.to(context, post_head.thumbnail),
         height: thumbnail_height,
         width: thumbnail_width,
         fit: BoxFit.fill,
@@ -124,7 +125,7 @@ class NonMobilePostView {
         padding:
             EdgeInsets.only(top: 30.0, bottom: 30.0, left: 20.0, right: 20.0),
         child: Row(children: [
-          getThumbnailView(),
+          getThumbnailView(context),
           getInfoView(),
         ]));
   }

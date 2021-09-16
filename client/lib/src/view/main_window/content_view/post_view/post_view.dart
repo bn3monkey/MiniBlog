@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:client/src/model/post_head.dart';
 import 'mobile_post_view.dart';

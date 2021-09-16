@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'tag_view/tag_view.dart';
 import 'upper_header_view/upper_header_view.dart';
+import 'package:client/src/auxiliary/asset_path.dart';
 
 class HeaderView extends StatelessWidget {
   HeaderView({Key? key}) : super(key: key);
@@ -12,9 +13,9 @@ class HeaderView extends StatelessWidget {
     double tag_view_height = height - upper_header_height;
     return Container(
       height: height,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         image: DecorationImage(
-          image: const AssetImage('image/banner.png'),
+          image: AssetImage(AssetPath.to(context, 'image/banner.png')),
           fit: BoxFit.cover,
         ),
       ),
