@@ -89,7 +89,7 @@ class _PostViewState extends State<PostView> {
     bool is_mobile = width < 600.0;
 
     return is_mobile
-        ? MobilePostView(post_head: post_head, width: width).build(context)
-        : NonMobilePostView(post_head: post_head).build(context);
+        ? MobilePostView(post_head: post_head, width: width)
+        : NonMobilePostView(post_head: post_head);
   }
 }

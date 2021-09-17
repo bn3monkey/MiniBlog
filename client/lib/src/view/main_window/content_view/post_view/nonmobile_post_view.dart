@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:client/src/model/post_head.dart';
 import 'package:client/src/auxiliary/asset_path.dart';
+import 'package:client/src/auxiliary/date_time_converter.dart';
 
-class NonMobilePostView {
-  NonMobilePostView({required this.post_head});
+class NonMobilePostView extends StatelessWidget {
+  NonMobilePostView({Key? key, required this.post_head}) : super(key: key);
 
   final PostHead post_head;
 
@@ -85,16 +86,7 @@ class NonMobilePostView {
         ));
   }
 
-  String convertDateTime(DateTime date) {
-    String year = date.year.toString();
-    String month = date.month.toString();
-    String day = date.day.toString();
-    String hour = date.hour.toString();
-    String minute = date.minute.toString();
-    return "${year}-${month.padLeft(2, '0')}-${day.padLeft(2, '0')} ${hour.padLeft(2, '0')}-${minute.padLeft(2, '0')}";
-  }
-
-  Widget getViewsView() {
+ Widget getViewsView() {
     var textStyle = TextStyle(
       color: Color(0xff707070),
       fontSize: 20,
@@ -105,7 +97,8 @@ class NonMobilePostView {
         flex: bottom_vertical_ratio,
         child: Padding(
             padding: EdgeInsets.all(5.0),
-            child: Row(children: [
+            child: Row(
+              children: [
               Container(
                 padding: EdgeInsets.only(left: 10.0, right: 10.0),
                 child: Text("조회수 : ${post_head.views}회", style: textStyle),
@@ -113,12 +106,13 @@ class NonMobilePostView {
               Text("|", style: textStyle),
               Container(
                 padding: EdgeInsets.only(left: 10.0, right: 10.0),
-                child: Text(convertDateTime(post_head.creation_date),
+                child: Text(DateTimeConverter.convert(post_head.creation_date),
                     style: textStyle),
               ),
             ])));
   }
 
+  @override
   Widget build(BuildContext context) {
     return Container(
         height: height,

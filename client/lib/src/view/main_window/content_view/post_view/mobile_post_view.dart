@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:client/src/model/post_head.dart';
 import 'package:client/src/auxiliary/asset_path.dart';
+import 'package:client/src/auxiliary/date_time_converter.dart';
 
-class MobilePostView {
-  MobilePostView({required this.post_head, required this.width});
+class MobilePostView extends StatelessWidget {
+  MobilePostView({Key? key, required this.post_head, required this.width})
+      : super(key: key);
   final PostHead post_head;
   final double width;
 
@@ -78,15 +80,6 @@ class MobilePostView {
     );
   }
 
-  String convertDateTime(DateTime date) {
-    String year = date.year.toString();
-    String month = date.month.toString();
-    String day = date.day.toString();
-    String hour = date.hour.toString();
-    String minute = date.minute.toString();
-    return "${year}-${month.padLeft(2, '0')}-${day.padLeft(2, '0')} ${hour.padLeft(2, '0')}-${minute.padLeft(2, '0')}";
-  }
-
   Widget getViewsView() {
     var textStyle = TextStyle(
       color: Color(0xff707070),
@@ -111,12 +104,13 @@ class MobilePostView {
           ),
           Container(
             padding: EdgeInsets.only(left: 10.0, right: 10.0),
-            child: Text(convertDateTime(post_head.creation_date),
+            child: Text(DateTimeConverter.convert(post_head.creation_date),
                 style: textStyle),
           ),
         ]));
   }
 
+  @override
   Widget build(BuildContext context) {
     return Container(
         padding:
