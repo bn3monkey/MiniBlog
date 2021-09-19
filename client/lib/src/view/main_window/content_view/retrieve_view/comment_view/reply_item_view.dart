@@ -6,24 +6,21 @@ import 'package:client/src/auxiliary/asset_path.dart';
 import 'package:client/src/auxiliary/date_time_converter.dart';
 
 import 'package:client/src/model/user.dart';
-import 'package:client/src/model/comment.dart';
+import 'package:client/src/model/reply.dart';
 
-import 'reply_view.dart';
+class ReplyItemView extends StatefulWidget {
+  ReplyItemView({Key? key, required this.reply}) : super(key: key);
 
-class CommentItemView extends StatefulWidget {
-  CommentItemView({Key? key, required this.comment}) : super(key: key);
-
-  final Comment comment;
+  final Reply reply;
   User current_user =
       User(id: 6, name: "샌즈", profile: "image/test/profile2.png");
 
   @override
-  _CommentItemViewState createState() => _CommentItemViewState();
+  _ReplyitemViewState createState() => _ReplyitemViewState();
 }
 
-class _CommentItemViewState extends State<CommentItemView> {
+class _ReplyitemViewState extends State<ReplyItemView> {
   bool is_modifying = false;
-  bool is_replying = false;
 
   @override
   initState() {
@@ -32,7 +29,6 @@ class _CommentItemViewState extends State<CommentItemView> {
   }
 
   final comment_text = TextEditingController();
-  final reply_text = TextEditingController();
 
   Widget getThumbnailView(BuildContext context) {
     const size = 20.0;
@@ -42,8 +38,7 @@ class _CommentItemViewState extends State<CommentItemView> {
       child: CircleAvatar(
         radius: size,
         child: ClipOval(
-          child:
-              Image.asset(AssetPath.to(context, widget.comment.user.profile)),
+          child: Image.asset(AssetPath.to(context, widget.reply.user.profile)),
         ),
       ),
     );
@@ -55,7 +50,7 @@ class _CommentItemViewState extends State<CommentItemView> {
       children: [
         Container(
             padding: EdgeInsets.only(right: 10.0),
-            child: Text(widget.comment.user.name,
+            child: Text(widget.reply.user.name,
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 15,
@@ -64,7 +59,7 @@ class _CommentItemViewState extends State<CommentItemView> {
                 textAlign: TextAlign.center)),
         Container(
           padding: EdgeInsets.only(right: 1.0),
-          child: Text(DateTimeConverter.convert(widget.comment.creation_date),
+          child: Text(DateTimeConverter.convert(widget.reply.creation_date),
               style: TextStyle(
                   color: Colors.black,
                   fontSize: 11,
@@ -102,7 +97,7 @@ class _CommentItemViewState extends State<CommentItemView> {
                     ),
                     hintText: "원숭이에게 관심을 주세요."))
             : Text(
-                widget.comment.content,
+                widget.reply.content,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 15,
@@ -136,7 +131,7 @@ class _CommentItemViewState extends State<CommentItemView> {
                 onPressed: () {
                   setState(() {
                     print("수정 -> 확인 ($is_modifying)");
-                    comment_text.text = widget.comment.content;
+                    comment_text.text = widget.reply.content;
                     is_modifying = true;
                   });
                 },
@@ -158,121 +153,14 @@ class _CommentItemViewState extends State<CommentItemView> {
                   fontWeight: FontWeight.w400),
               textAlign: TextAlign.center),
         ),
-        TextButton(
-          onPressed: () {
-            setState(() {
-              is_replying = !is_replying;
-            });
-          },
-          child: Text("답변",
-              style: TextStyle(
-                  color: Color(0x80005555),
-                  fontSize: 12,
-                  fontFamily: 'NotoSans',
-                  fontWeight: FontWeight.w400),
-              textAlign: TextAlign.center),
-        ),
       ],
     );
-  }
-
-  Widget getWriteThumbNailView(BuildContext context) {
-    const size = 20.0;
-    return CircleAvatar(
-      radius: size + 1,
-      backgroundColor: Colors.grey,
-      child: CircleAvatar(
-        radius: size,
-        child: ClipOval(
-          child:
-              Image.asset(AssetPath.to(context, widget.current_user.profile)),
-        ),
-      ),
-    );
-  }
-
-  Widget getWriteInputView(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20.0),
-      child: TextField(
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 15,
-            fontFamily: 'NotoSans',
-            fontWeight: FontWeight.w400,
-          ),
-          textAlign: TextAlign.start,
-          controller: reply_text,
-          keyboardType: TextInputType.multiline,
-          maxLines: null,
-          decoration: InputDecoration(
-              enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xff707070))),
-              hintStyle: TextStyle(
-                color: Colors.grey,
-                fontSize: 15,
-                fontFamily: 'NotoSans',
-                fontWeight: FontWeight.w300,
-              ),
-              hintText: "댓글 부대에게 관심을 주세요.")),
-    );
-  }
-
-  Widget getWritePanelView(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        TextButton(
-          onPressed: () {
-            reply_text.clear();
-          },
-          child: Text("취소",
-              style: TextStyle(
-                  color: Color(0x80707070),
-                  fontSize: 12,
-                  fontFamily: 'NotoSans',
-                  fontWeight: FontWeight.w400),
-              textAlign: TextAlign.center),
-        ),
-        TextButton(
-          onPressed: () {
-            setState(() {
-              is_replying = false;
-            });
-          },
-          child: Text("댓글",
-              style: TextStyle(
-                  color: Color(0x80005555),
-                  fontSize: 12,
-                  fontFamily: 'NotoSans',
-                  fontWeight: FontWeight.w400),
-              textAlign: TextAlign.center),
-        ),
-      ],
-    );
-  }
-
-  Widget getWriteView(BuildContext context) {
-    return Container(
-        padding: EdgeInsets.only(left: 12.0),
-        child: Column(
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                getWriteThumbNailView(context),
-                Expanded(child: getWriteInputView(context)),
-              ],
-            ),
-            getWritePanelView(context),
-          ],
-        ));
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.symmetric(horizontal: 12.0),
+        padding: EdgeInsets.only(left: 12.0),
         child: Column(
           children: [
             Row(
@@ -291,9 +179,7 @@ class _CommentItemViewState extends State<CommentItemView> {
                 ))
               ],
             ),
-            getPanelView(context),
-            is_replying ? getWriteView(context) : Container(),
-            ReplyView(replies: widget.comment.replies),
+            getPanelView(context)
           ],
         ));
   }

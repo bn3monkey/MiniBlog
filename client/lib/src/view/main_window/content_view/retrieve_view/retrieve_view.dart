@@ -85,7 +85,12 @@ Do you know Kimchi?
       Comment(
           id: 3,
           user: User(id: 3, profile: "image/test/profile3.png", name: "와파피루스"),
-          content: "Do you wanna have a good time?",
+          content: '''
+좀 기다란 댓글을 위해서
+테스트용으로 하튼
+어쩌구저쩌구 말 많이 해서
+세계정복하고 싶다.
+''',
           creation_date: DateTime.now(),
           replies: []),
     ],
