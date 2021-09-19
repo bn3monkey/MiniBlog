@@ -21,12 +21,41 @@ class RetrieveView extends StatefulWidget {
         views: 12,
         thumbnail: "image/test/thumbnail1.png",
         creation_date: DateTime.now()),
-    content: "#샌즈파피루스PPAP\n##샌즈\n겁나 셉니다\n##파피루스\n겁나 착합니다.",
+    content: '''
+# 샌즈파피루스PPAP
+## 샌즈
+겁나 셉니다
+## 파피루스
+겁나 착합니다.
+
+스크롤 수를 늘리기 위해
+아무렇게나 뭐라도 씁니다.
+
+샌즈
+파피루스
+PPAP
+샌즈 파피루스
+PPAP
+
+*샌즈 파피루스 PPAP*
+**샌즈 파피루스 PPAP*
+
+```cpp
+int main()
+{
+  printf("FUCKING");
+  return 0;
+}
+```
+
+Do you know Kimchi?
+''',
     comments: [
       Comment(
           id: 1,
           user: User(id: 1, profile: "image/test/profile1.png", name: "조선킹숭이"),
           content: "우끼끼!",
+          creation_date: DateTime.now(),
           replies: [
             Reply(
                 id: 1,
@@ -35,6 +64,7 @@ class RetrieveView extends StatefulWidget {
                   profile: "image/test/profile4.png",
                   name: "일본갓숭이",
                 ),
+                creation_date: DateTime.now(),
                 content: "좌끼끼"),
             Reply(
                 id: 2,
@@ -43,17 +73,20 @@ class RetrieveView extends StatefulWidget {
                   profile: "image/test/profile5.png",
                   name: "엠퍼러원숭이",
                 ),
+                creation_date: DateTime.now(),
                 content: "상끼끼"),
           ]),
       Comment(
           id: 2,
           user: User(id: 2, profile: "image/test/profile2.png", name: "와샌즈"),
           content: "Do you wanna have a bad time?",
+          creation_date: DateTime.now(),
           replies: []),
       Comment(
           id: 3,
           user: User(id: 3, profile: "image/test/profile3.png", name: "와파피루스"),
           content: "Do you wanna have a good time?",
+          creation_date: DateTime.now(),
           replies: []),
     ],
   );

@@ -13,6 +13,8 @@ class SearchView extends StatefulWidget {
 }
 
 class _SearchViewState extends State<SearchView> {
+  final search_text = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     double width = widget.width;
@@ -44,6 +46,7 @@ class _SearchViewState extends State<SearchView> {
                       fontWeight: FontWeight.w400,
                     ),
                     textAlign: TextAlign.start,
+                    controller: search_text,
                     decoration: InputDecoration.collapsed(
                         hintStyle: TextStyle(
                           color: Colors.white.withOpacity(0.8),
@@ -54,9 +57,13 @@ class _SearchViewState extends State<SearchView> {
                         hintText: "검색어를 입력하세요.")),
               ),
             ),
-            Padding(
-                padding: EdgeInsets.only(right: 3.0),
-                child: Icon(KoreaMonkey.cancel, color: Colors.white))
+            IconButton(
+                padding: EdgeInsets.only(bottom: 4.0),
+                iconSize: 30.0,
+                icon: Icon(KoreaMonkey.cancel, color: Colors.white),
+                onPressed: () {
+                  search_text.clear();
+                }),
           ],
         ));
   }

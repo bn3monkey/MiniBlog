@@ -5,6 +5,7 @@ import 'package:client/src/auxiliary/asset_path.dart';
 import 'package:client/src/model/comment.dart';
 import 'package:client/src/auxiliary/date_time_converter.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'comment_view/comment_view.dart';
 
 class NonMobileRetrieveView extends StatelessWidget {
   NonMobileRetrieveView({Key? key, required this.post});
@@ -152,39 +153,53 @@ class NonMobileRetrieveView extends StatelessWidget {
 
   Widget getHeaderView(BuildContext context) {
     return Container(
+      padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+      decoration: BoxDecoration(color: Colors.white, boxShadow: [
+        BoxShadow(
+            color: Colors.grey,
+            blurRadius: 1.0,
+            spreadRadius: 0.0,
+            offset: Offset(
+              0,
+              3,
+            ))
+      ]),
       child: Row(
         children: [
           getThumbnailView(context),
           Expanded(
-            flex: 7,
             child: getInfoView(context),
           ),
-          Expanded(flex: 2, child: getSuperUserView(context)),
+          getSuperUserView(context),
         ],
       ),
     );
   }
 
   Widget getContentView(BuildContext context) {
-    return Expanded(
-      child: Markdown(data: post.content),
-    );
+    return Container(
+        alignment: Alignment.centerLeft,
+        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+        child: MarkdownBody(data: post.content));
   }
 
   Widget getCommentView(BuildContext context) {
-    return Container();
+    return CommentView(comments: post.comments);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
-        child: Column(
-          children: [
-            getHeaderView(context),
-            getContentView(context),
-            getCommentView(context),
-          ],
-        ));
+    return SingleChildScrollView(
+      padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+      child: Column(children: [
+        getHeaderView(context),
+        getContentView(context),
+        Divider(
+          color: Colors.grey,
+          thickness: 1,
+        ),
+        getCommentView(context),
+      ]),
+    );
   }
 }

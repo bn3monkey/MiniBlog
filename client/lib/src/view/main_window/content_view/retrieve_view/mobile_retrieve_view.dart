@@ -5,6 +5,7 @@ import 'package:client/src/auxiliary/asset_path.dart';
 import 'package:client/src/model/comment.dart';
 import 'package:client/src/auxiliary/date_time_converter.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'comment_view/comment_view.dart';
 
 class MobileRetrieveView extends StatelessWidget {
   MobileRetrieveView({Key? key, required this.post});
@@ -13,35 +14,19 @@ class MobileRetrieveView extends StatelessWidget {
 
   static const double thumbnail_height = 100;
   static const double thumbnail_width = thumbnail_height * 1.5;
-  static const double half_thumbnail_height = thumbnail_height / 2;
-
-  Widget getThumbnailView(BuildContext context) {
-    var thumbnail = post.head.thumbnail;
-
-    return Container(
-      padding: EdgeInsets.only(left: 20.0, right: 20.0),
-      alignment: Alignment.center,
-      child: Image.asset(
-        AssetPath.to(context, thumbnail),
-        height: 100,
-        width: 150,
-        fit: BoxFit.fill,
-      ),
-    );
-  }
+  static const double info_height = thumbnail_height / 3;
 
   Widget getTitleView(BuildContext context) {
     var title = post.head.title;
     return Container(
-        height: half_thumbnail_height,
+        height: info_height,
         alignment: Alignment.centerLeft,
-        padding:
-            EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0, bottom: 10.0),
+        padding: EdgeInsets.symmetric(horizontal: 20.0),
         child: Text(
           title,
           style: TextStyle(
             color: Colors.black,
-            fontSize: 30,
+            fontSize: 25,
             fontFamily: 'NotoSans',
             fontWeight: FontWeight.w700,
           ),
@@ -50,16 +35,16 @@ class MobileRetrieveView extends StatelessWidget {
 
   Widget getTagView(BuildContext context) {
     return Container(
-      height: half_thumbnail_height,
+      height: info_height,
       alignment: Alignment.centerLeft,
-      padding: EdgeInsets.all(5.0),
+      padding: EdgeInsets.symmetric(horizontal: 12.0),
       child: Row(
           children: List<Widget>.generate(post.head.tags.length, (idx) {
         return Padding(
             padding: EdgeInsets.only(left: 5.0, right: 5.0),
             child: Container(
               padding: const EdgeInsets.only(
-                  left: 25.0, right: 25.0, top: 3.0, bottom: 3.0),
+                  left: 25.0, right: 25.0, top: 1.0, bottom: 1.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: Color(0xff3BDC9A),
@@ -67,7 +52,7 @@ class MobileRetrieveView extends StatelessWidget {
               child: Text(post.head.tags[idx],
                   style: TextStyle(
                     color: Color(0xff707070),
-                    fontSize: 15,
+                    fontSize: 12,
                     fontFamily: 'NotoSans',
                     fontWeight: FontWeight.w300,
                   )),
@@ -76,28 +61,21 @@ class MobileRetrieveView extends StatelessWidget {
     );
   }
 
-  Widget getInfoView(BuildContext context) {
-    return Column(children: [
-      getTitleView(context),
-      getTagView(context),
-    ]);
-  }
-
   Widget getViewsView(BuildContext context) {
     var views = post.head.views;
     var creation_date = post.head.creation_date;
 
     var textStyle = TextStyle(
       color: Color(0xff707070),
-      fontSize: 20,
+      fontSize: 15,
       fontFamily: 'NotoSans',
       fontWeight: FontWeight.w300,
     );
 
     return Container(
-      height: half_thumbnail_height,
+      height: info_height,
       alignment: Alignment.centerRight,
-      padding: EdgeInsets.all(5.0),
+      padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 2.0),
       child: Row(children: [
         Container(
           padding: EdgeInsets.only(left: 10.0, right: 10.0),
@@ -113,9 +91,16 @@ class MobileRetrieveView extends StatelessWidget {
     );
   }
 
+  Widget getInfoView(BuildContext context) {
+    return Column(children: [
+      getTitleView(context),
+      getTagView(context),
+      getViewsView(context),
+    ]);
+  }
+
   Widget getSuperUserView(BuildContext context) {
     return Container(
-      height: half_thumbnail_height,
       alignment: Alignment.centerRight,
       padding: EdgeInsets.all(5.0),
       child: Row(
@@ -153,42 +138,50 @@ class MobileRetrieveView extends StatelessWidget {
 
   Widget getHeaderView(BuildContext context) {
     return Container(
-      child: Row(
+      padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+      decoration: BoxDecoration(color: Colors.white, boxShadow: [
+        BoxShadow(
+            color: Colors.grey,
+            blurRadius: 1.0,
+            spreadRadius: 0.0,
+            offset: Offset(
+              0,
+              3,
+            ))
+      ]),
+      child: Column(
         children: [
-          getThumbnailView(context),
-          Expanded(
-            child: getInfoView(context),
-          ),
-          Expanded(
-            child: Column(children: [
-              getViewsView(context),
-              getSuperUserView(context),
-            ]),
-          )
+          getInfoView(context),
+          getSuperUserView(context),
         ],
       ),
     );
   }
 
   Widget getContentView(BuildContext context) {
-    return Expanded(
-      child: Markdown(data: post.content),
-    );
+    return Container(
+        alignment: Alignment.centerLeft,
+        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+        child: MarkdownBody(data: post.content));
   }
 
   Widget getCommentView(BuildContext context) {
-    return Container();
+    return CommentView(comments: post.comments);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Column(
-      children: [
+    return SingleChildScrollView(
+      padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+      child: Column(children: [
         getHeaderView(context),
         getContentView(context),
+        Divider(
+          color: Colors.grey,
+          thickness: 1,
+        ),
         getCommentView(context),
-      ],
-    ));
+      ]),
+    );
   }
 }
