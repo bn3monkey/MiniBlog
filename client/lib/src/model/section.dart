@@ -1,10 +1,17 @@
 class Section {
-  Section({required this.items});
+  Section({required this.items}) {
+    print("Section initilziation is called");
+  }
 
   int selected = -1;
   final List<String> items;
 
   int get length => items.length;
+
+  String selectedItem() {
+    if (selected == -1) return "";
+    return items[selected];
+  }
 
   String operator [](int idx) {
     return items[idx];

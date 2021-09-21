@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'mobile_retrieve_view.dart';
-import 'nonmobile_retrieve_view.dart';
 
 import 'package:client/src/model/post_head.dart';
 import 'package:client/src/model/post.dart';
@@ -8,8 +6,14 @@ import 'package:client/src/model/user.dart';
 import 'package:client/src/model/comment.dart';
 import 'package:client/src/model/reply.dart';
 
+import 'package:client/src/auxiliary/asset_path.dart';
+import 'package:client/src/auxiliary/date_time_converter.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
+import 'comment_view/comment_view.dart';
+
 class RetrieveView extends StatefulWidget {
   RetrieveView({Key? key, required this.width}) : super(key: key);
+
   final double width;
 
   Post post = Post(
@@ -28,27 +32,12 @@ class RetrieveView extends StatefulWidget {
 ## 파피루스
 겁나 착합니다.
 
-스크롤 수를 늘리기 위해
-아무렇게나 뭐라도 씁니다.
-
-샌즈
-파피루스
-PPAP
-샌즈 파피루스
-PPAP
-
-*샌즈 파피루스 PPAP*
-**샌즈 파피루스 PPAP*
-
-```cpp
-int main()
-{
-  printf("FUCKING");
-  return 0;
-}
-```
-
-Do you know Kimchi?
+  언더테일 아시는구나! 혹시 모르시는분들에 대해 설명해드립니다 샌즈랑 언더테일의 세가지 엔딩루트중
+몰살 엔딩의 최종보스로 진.짜.겁.나.어.렵.습.니.다 공격은 전부다 회피하고 만피가 92인데 샌즈의 공격은 1초당
+60이 다는데다가 독뎀까지 추가로 붙어있습니다.. 하지만 이러면 절대로 게임을 깰 수 가없으니 제작진이 치명
+적인 약점을 만들었죠. 샌즈의 치명적인 약점이 바로 지친다는것입니다. 패턴들을 다 견디고나면 지쳐서 자신의
+턴을 유지한채로 잠에듭니다. 하지만 잠이들었을때 창을옮겨서 공격을 시도하고 샌즈는 1차공격은 피하지만 그
+후에 바로날아오는 2차 공격을 맞고 죽습니다.
 ''',
     comments: [
       Comment(
@@ -101,17 +90,211 @@ Do you know Kimchi?
 }
 
 class _RetrieveViewState extends State<RetrieveView> {
+  late Post post;
+  late bool is_mobile = false;
+
+  @override
+  initState() {
+    post = widget.post;
+  }
+
+  static const double thumbnail_height = 100;
+  static const double thumbnail_width = thumbnail_height * 1.5;
+  static const double info_height = thumbnail_height / 3;
+
+  Widget getThumbnailView(BuildContext context) {
+    var thumbnail = post.head.thumbnail;
+
+    return Container(
+      padding: EdgeInsets.only(left: 20.0, right: 20.0),
+      alignment: Alignment.center,
+      child: Image.asset(
+        AssetPath.to(context, thumbnail),
+        height: 100,
+        width: 150,
+        fit: BoxFit.fill,
+      ),
+    );
+  }
+
+  Widget getTitleView(BuildContext context) {
+    var title = post.head.title;
+    return Container(
+        height: info_height,
+        alignment: Alignment.centerLeft,
+        padding: EdgeInsets.symmetric(horizontal: 10.0),
+        child: Text(
+          title,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 25,
+            fontFamily: 'NotoSans',
+            fontWeight: FontWeight.w700,
+          ),
+        ));
+  }
+
+  Widget getTagView(BuildContext context) {
+    return Container(
+      height: info_height,
+      alignment: Alignment.centerLeft,
+      padding: EdgeInsets.symmetric(horizontal: 2.0),
+      child: Row(
+          children: List<Widget>.generate(post.head.tags.length, (idx) {
+        return Padding(
+            padding: EdgeInsets.only(left: 5.0, right: 5.0),
+            child: Container(
+              padding: const EdgeInsets.only(
+                  left: 25.0, right: 25.0, top: 1.0, bottom: 1.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Color(0xff3BDC9A),
+              ),
+              child: Text(post.head.tags[idx],
+                  style: TextStyle(
+                    color: Color(0xff707070),
+                    fontSize: 12,
+                    fontFamily: 'NotoSans',
+                    fontWeight: FontWeight.w300,
+                  )),
+            ));
+      })),
+    );
+  }
+
+  Widget getViewsView(BuildContext context) {
+    var views = post.head.views;
+    var creation_date = post.head.creation_date;
+
+    var textStyle = TextStyle(
+      color: Color(0xff707070),
+      fontSize: 15,
+      fontFamily: 'NotoSans',
+      fontWeight: FontWeight.w300,
+    );
+
+    return Container(
+      height: info_height,
+      alignment: Alignment.centerRight,
+      padding: EdgeInsets.all(2.0),
+      child: Row(children: [
+        Container(
+          padding: EdgeInsets.only(left: 10.0, right: 10.0),
+          child: Text("조회수 : ${views}회", style: textStyle),
+        ),
+        Text("|", style: textStyle),
+        Container(
+          padding: EdgeInsets.only(left: 10.0, right: 10.0),
+          child:
+              Text(DateTimeConverter.convert(creation_date), style: textStyle),
+        ),
+      ]),
+    );
+  }
+
+  Widget getInfoView(BuildContext context) {
+    return Column(children: [
+      getTitleView(context),
+      getTagView(context),
+      getViewsView(context),
+    ]);
+  }
+
+  Widget getSuperUserView(BuildContext context) {
+    return Container(
+      alignment: Alignment.centerRight,
+      padding: EdgeInsets.all(5.0),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+            child: TextButton(
+              onPressed: () {},
+              child: Text("수정",
+                  style: TextStyle(
+                      color: Color(0xff005555),
+                      fontSize: 20,
+                      fontFamily: 'NotoSans',
+                      fontWeight: FontWeight.w400),
+                  textAlign: TextAlign.center),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+            child: TextButton(
+              onPressed: () {},
+              child: Text("삭제",
+                  style: TextStyle(
+                      color: Color(0xff005555),
+                      fontSize: 20,
+                      fontFamily: 'NotoSans',
+                      fontWeight: FontWeight.w400),
+                  textAlign: TextAlign.center),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget getHeaderView(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+      decoration: BoxDecoration(color: Colors.white, boxShadow: [
+        BoxShadow(
+            color: Colors.grey,
+            blurRadius: 1.0,
+            spreadRadius: 0.0,
+            offset: Offset(
+              0,
+              3,
+            ))
+      ]),
+      child: is_mobile
+          ? Column(
+              children: [
+                getInfoView(context),
+                getSuperUserView(context),
+              ],
+            )
+          : Row(
+              children: [
+                getThumbnailView(context),
+                Expanded(
+                  child: getInfoView(context),
+                ),
+                getSuperUserView(context),
+              ],
+            ),
+    );
+  }
+
+  Widget getContentView(BuildContext context) {
+    return Container(
+        alignment: Alignment.centerLeft,
+        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+        child: MarkdownBody(data: post.content));
+  }
+
+  Widget getCommentView(BuildContext context) {
+    return CommentView(comments: post.comments);
+  }
+
   @override
   Widget build(BuildContext context) {
-    Post post = widget.post;
-    var width = widget.width;
+    is_mobile = widget.width < 600.0;
 
-    print("width : $width");
-
-    bool is_mobile = width < 600.0;
-
-    return is_mobile
-        ? MobileRetrieveView(post: post)
-        : NonMobileRetrieveView(post: post);
+    return SingleChildScrollView(
+      padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+      child: Column(children: [
+        getHeaderView(context),
+        getContentView(context),
+        Divider(
+          color: Colors.grey,
+          thickness: 1,
+        ),
+        getCommentView(context),
+      ]),
+    );
   }
 }

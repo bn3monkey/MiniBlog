@@ -1,5 +1,6 @@
 class Tag {
   Tag({required this.items}) {
+    print("Tag initilziation is called");
     is_selected = List<bool>.generate(items.length, (idx) {
       return true;
     });
@@ -9,6 +10,19 @@ class Tag {
   late List<bool> is_selected;
 
   int get length => items.length;
+
+  bool findAndRemove(String item) {
+    int index = items.indexOf(item);
+    if (index < 0) return false;
+    items.removeAt(index);
+    is_selected.removeAt(index);
+    return true;
+  }
+
+  void add(String item) {
+    items.add(item);
+    is_selected.add(true);
+  }
 
   String operator [](int idx) {
     return items[idx];
@@ -24,5 +38,17 @@ class Tag {
 
   bool isSelected(int idx) {
     return is_selected[idx];
+  }
+
+  void selectAll() {
+    for (int i = 0; i < is_selected.length; i++) {
+      is_selected[i] = true;
+    }
+  }
+
+  void unselectAll() {
+    for (int i = 0; i < is_selected.length; i++) {
+      is_selected[i] = false;
+    }
   }
 }

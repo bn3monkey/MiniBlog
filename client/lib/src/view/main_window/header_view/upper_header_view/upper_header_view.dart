@@ -8,8 +8,6 @@ class UpperHeaderView extends StatelessWidget {
   UpperHeaderView({Key? key, required this.height}) : super(key: key);
   final double height;
 
-  final List<String> sections = ["그림", "음악", "코딩"];
-
   @override
   Widget build(BuildContext context) {
     double screen_width = MediaQuery.of(context).size.width;

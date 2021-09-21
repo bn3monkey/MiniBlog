@@ -44,21 +44,21 @@ class _TagViewState extends State<TagView> {
                 onPressed: () {
                   select(index);
                 },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      isSelected ? Color(0xaa3BDC9A) : Colors.transparent),
-                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                    side: BorderSide(
-                        width: 2.0,
-                        color: isSelected
-                            ? Colors.white
-                            : Colors.white.withOpacity(0.5),
-                        style: BorderStyle.solid),
+                style: OutlinedButton.styleFrom(
+                  backgroundColor:
+                      isSelected ? Color(0xaa3BDC9A) : Colors.transparent,
+                  side: BorderSide(
+                      width: 1.0,
+                      color: isSelected
+                          ? Colors.white
+                          : Colors.white.withOpacity(0.5),
+                      style: BorderStyle.solid),
+                  shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
-                  )),
+                  ),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.only(left: 25.0, right: 25.0),
+                  padding: EdgeInsets.only(left: 5.0, right: 5.0),
                   child: Text(text,
                       style: TextStyle(
                         color: isSelected
