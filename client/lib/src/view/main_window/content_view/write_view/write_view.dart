@@ -25,10 +25,6 @@ class WriteView extends StatefulWidget {
 
   @override
   _WriteViewState createState() => _WriteViewState();
-
-  void resize(double width) {
-    this.width = width;
-  }
 }
 
 class _WriteViewState extends State<WriteView> {
