@@ -24,11 +24,13 @@ class UpperHeaderView extends StatelessWidget {
           // Left : Title View - Right : Search View & User View
           Row(children: <Widget>[
             // Title View
-            Expanded(
-                child: Padding(
+            Container(
               padding: EdgeInsets.all(5),
               child: TitleView(size: top_column_size),
-            )),
+            ),
+            Expanded(
+              child: Container(),
+            ),
             // Serach View
             Padding(
                 padding: EdgeInsets.all(5),
@@ -43,9 +45,12 @@ class UpperHeaderView extends StatelessWidget {
             ),
           ]),
           // Right : Section View
-          Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [SectionView(height: bottom_column_size)]),
+          Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+            Expanded(
+              child: Container(),
+            ),
+            SectionView(height: bottom_column_size)
+          ]),
         ]));
   }
 }

@@ -32,6 +32,7 @@ class _SearchViewState extends State<SearchView> {
             Padding(
                 padding: EdgeInsets.only(left: 3.0, right: 10.0),
                 child: CircleBorderButton(
+                    onPressed: () {},
                     size: height * 0.8,
                     child: Icon(KoreaMonkey.search,
                         color: Colors.white, size: 0.7 * height))),

@@ -23,6 +23,7 @@ class _UserViewState extends State<UserView> {
   Widget build(BuildContext context) {
     double size = widget.size;
     return CircleBorderButton(
+        onPressed: () {},
         size: size,
         child: Icon(KoreaMonkey.info, color: Colors.white, size: 0.9 * size));
   }

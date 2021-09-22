@@ -7,7 +7,7 @@ class TitleView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(children: <Widget>[
+    var text = Row(children: <Widget>[
       FittedBox(
         fit: BoxFit.scaleDown,
         alignment: Alignment.centerLeft,
@@ -19,5 +19,10 @@ class TitleView extends StatelessWidget {
       ),
       Icon(KoreaMonkey.title_icon, color: Colors.white, size: size * 0.9)
     ]);
+
+    return TextButton(
+      onPressed: () {},
+      child: text,
+    );
   }
 }
