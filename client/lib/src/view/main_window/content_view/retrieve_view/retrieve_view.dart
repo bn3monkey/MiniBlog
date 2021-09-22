@@ -136,7 +136,7 @@ class _RetrieveViewState extends State<RetrieveView> {
       child: Wrap(
           children: List<Widget>.generate(post.head.tags.length, (idx) {
         return Padding(
-            padding: EdgeInsets.only(right: 5.0, bottom: 2.0),
+            padding: EdgeInsets.only(right: 5.0, bottom: 5.0),
             child: Container(
               padding: const EdgeInsets.only(
                   left: 25.0, right: 25.0, top: 1.0, bottom: 1.0),
