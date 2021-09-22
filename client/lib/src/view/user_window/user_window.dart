@@ -1,3 +1,4 @@
+import 'package:client/src/view/user_window/password_finding_view/password_finding_view.dart';
 import 'package:flutter/material.dart';
 import 'package:client/src/auxiliary/asset_path.dart';
 
@@ -30,7 +31,8 @@ class _UserWindowState extends State<UserWindow> {
           ),
         ),
         child: //LoginView(),
-            SignupView(),
+            //SignupView(),
+            PasswordFindingView(),
       ),
     );
   }
