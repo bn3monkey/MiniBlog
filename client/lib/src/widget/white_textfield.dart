@@ -24,7 +24,7 @@ class WhiteTextField extends StatelessWidget {
     return Container(
         padding: padding,
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.2),
+          color: Colors.white.withOpacity(0.5),
           borderRadius: BorderRadius.circular(15.0),
         ),
         child: TextField(
@@ -32,7 +32,7 @@ class WhiteTextField extends StatelessWidget {
             controller: controller,
             obscureText: obscureText,
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontSize: fontSize,
               fontFamily: 'NotoSans',
               fontWeight: FontWeight.w400,
@@ -40,7 +40,7 @@ class WhiteTextField extends StatelessWidget {
             textAlign: TextAlign.start,
             decoration: InputDecoration.collapsed(
                 hintStyle: TextStyle(
-                  color: Colors.white.withOpacity(0.5),
+                  color: Colors.black.withOpacity(0.4),
                   fontSize: fontSize,
                   fontFamily: 'NotoSans',
                   fontWeight: FontWeight.w400,

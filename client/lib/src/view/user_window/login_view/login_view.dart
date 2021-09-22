@@ -112,7 +112,7 @@ class _LoginViewState extends State<LoginView> {
           child: Text("댓글 부대 되기",
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 12,
+                fontSize: 15,
                 fontFamily: 'NotoSans',
                 fontWeight: FontWeight.w300,
               ))),
@@ -122,7 +122,7 @@ class _LoginViewState extends State<LoginView> {
             "|",
             style: TextStyle(
               color: Colors.white,
-              fontSize: 12,
+              fontSize: 15,
               fontFamily: 'NotoSans',
               fontWeight: FontWeight.w300,
             ),
@@ -132,7 +132,7 @@ class _LoginViewState extends State<LoginView> {
           child: Text("비밀번호 찾기",
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 12,
+                fontSize: 15,
                 fontFamily: 'NotoSans',
                 fontWeight: FontWeight.w300,
               ))),
