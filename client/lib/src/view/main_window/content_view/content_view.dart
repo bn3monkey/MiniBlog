@@ -17,8 +17,8 @@ class _ContentViewState extends State<ContentView> {
 
     return Container(
       color: Colors.white,
-      child: PostView(width: width),
-      //RetrieveView(width: width),
+      child: //PostView(width: width),
+          RetrieveView(width: width),
       //WriteView(),
     );
   }

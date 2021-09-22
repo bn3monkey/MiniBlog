@@ -19,9 +19,9 @@ class RetrieveView extends StatefulWidget {
   Post post = Post(
     head: PostHead(
         id: 1,
-        title: "샌즈파피루스PPAP",
+        title: "와! 샌즈 아시는구나! 샌즈 겁나 셉니다!",
         section: "개발",
-        tags: ["TAG1", "TAG2"],
+        tags: ["샌즈", "파피루스", "피카츄라이츄", "파이리?꼬꼬꼬뿌끼", "TAG5"],
         views: 12,
         thumbnail: "image/test/thumbnail1.png",
         creation_date: DateTime.now()),
@@ -98,15 +98,11 @@ class _RetrieveViewState extends State<RetrieveView> {
     post = widget.post;
   }
 
-  static const double thumbnail_height = 100;
-  static const double thumbnail_width = thumbnail_height * 1.5;
-  static const double info_height = thumbnail_height / 3;
-
   Widget getThumbnailView(BuildContext context) {
     var thumbnail = post.head.thumbnail;
 
     return Container(
-      padding: EdgeInsets.only(left: 20.0, right: 20.0),
+      padding: EdgeInsets.only(left: 20.0),
       alignment: Alignment.center,
       child: Image.asset(
         AssetPath.to(context, thumbnail),
@@ -120,9 +116,8 @@ class _RetrieveViewState extends State<RetrieveView> {
   Widget getTitleView(BuildContext context) {
     var title = post.head.title;
     return Container(
-        height: info_height,
         alignment: Alignment.centerLeft,
-        padding: EdgeInsets.symmetric(horizontal: 10.0),
+        padding: EdgeInsets.symmetric(horizontal: 20.0),
         child: Text(
           title,
           style: TextStyle(
@@ -136,13 +131,12 @@ class _RetrieveViewState extends State<RetrieveView> {
 
   Widget getTagView(BuildContext context) {
     return Container(
-      height: info_height,
       alignment: Alignment.centerLeft,
-      padding: EdgeInsets.symmetric(horizontal: 2.0),
-      child: Row(
+      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+      child: Wrap(
           children: List<Widget>.generate(post.head.tags.length, (idx) {
         return Padding(
-            padding: EdgeInsets.only(left: 5.0, right: 5.0),
+            padding: EdgeInsets.only(right: 5.0, bottom: 2.0),
             child: Container(
               padding: const EdgeInsets.only(
                   left: 25.0, right: 25.0, top: 1.0, bottom: 1.0),
@@ -174,17 +168,16 @@ class _RetrieveViewState extends State<RetrieveView> {
     );
 
     return Container(
-      height: info_height,
       alignment: Alignment.centerRight,
-      padding: EdgeInsets.all(2.0),
+      padding: EdgeInsets.only(left: 20.0),
       child: Row(children: [
         Container(
-          padding: EdgeInsets.only(left: 10.0, right: 10.0),
+          padding: EdgeInsets.only(right: 10.0),
           child: Text("조회수 : ${views}회", style: textStyle),
         ),
         Text("|", style: textStyle),
         Container(
-          padding: EdgeInsets.only(left: 10.0, right: 10.0),
+          padding: EdgeInsets.only(left: 10.0),
           child:
               Text(DateTimeConverter.convert(creation_date), style: textStyle),
         ),
