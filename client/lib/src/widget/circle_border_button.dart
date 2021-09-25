@@ -9,7 +9,7 @@ class CircleBorderButton extends StatelessWidget {
   }) : super(key: key);
   final double size;
   final Widget child;
-  final Function()? onPressed;
+  final Function() onPressed;
 
   @override
   Widget build(BuildContext context) {

@@ -1,9 +1,10 @@
-import 'package:client/src/view/user_window/password_finding_view/password_finding_view.dart';
 import 'package:flutter/material.dart';
 import 'package:client/src/auxiliary/asset_path.dart';
 
 import 'login_view/login_view.dart';
 import 'signup_view/signup_view.dart';
+import 'password_finding_view/password_finding_view.dart';
+import 'thumbnail_resize_view/thumbnail_resize_view.dart';
 
 class UserWindow extends StatefulWidget {
   UserWindow({Key? key}) : super(key: key);
@@ -32,7 +33,8 @@ class _UserWindowState extends State<UserWindow> {
         ),
         child: //LoginView(),
             //SignupView(),
-            PasswordFindingView(),
+            //PasswordFindingView(),
+            ThumbnailResizeView(),
       ),
     );
   }
