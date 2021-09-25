@@ -39,9 +39,9 @@ class ThumbNailMask extends CustomPainter {
 
 class _ThumbnailResizeViewState extends State<ThumbnailResizeView> {
   double magnification = 1.0;
-  static const double magnification_step = 0.1;
+  static const double magnification_step = 0.25;
   static const double magnification_max = 10.0;
-  static const double magnification_min = 0.1;
+  static const double magnification_min = 0.25;
   static const int magnification_division =
       (magnification_max - magnification_min) ~/ magnification_step;
 
@@ -131,7 +131,7 @@ class _ThumbnailResizeViewState extends State<ThumbnailResizeView> {
             min: magnification_min,
             max: magnification_max,
             divisions: magnification_division,
-            label: magnification.round().toString(),
+            label: magnification.toString(),
             onChanged: (double value) {
               setState(() {
                 magnification = value;
