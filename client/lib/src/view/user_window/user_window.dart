@@ -5,6 +5,7 @@ import 'login_view/login_view.dart';
 import 'signup_view/signup_view.dart';
 import 'password_finding_view/password_finding_view.dart';
 import 'thumbnail_resize_view/thumbnail_resize_view.dart';
+import 'info_view/info_view.dart';
 
 class UserWindow extends StatefulWidget {
   UserWindow({Key? key}) : super(key: key);
@@ -34,7 +35,8 @@ class _UserWindowState extends State<UserWindow> {
         child: //LoginView(),
             //SignupView(),
             //PasswordFindingView(),
-            ThumbnailResizeView(),
+            //ThumbnailResizeView(),
+            InfoView(),
       ),
     );
   }
