@@ -35,8 +35,8 @@ class _UserWindowState extends State<UserWindow> {
         child: //LoginView(),
             //SignupView(),
             //PasswordFindingView(),
-            //ThumbnailResizeView(),
-            InfoView(),
+            ThumbnailResizeView(),
+        //InfoView(),
       ),
     );
   }
