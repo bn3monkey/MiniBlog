@@ -1,10 +1,11 @@
 import 'package:client/src/widget/circle_border_button.dart';
 import 'package:client/src/widget/white_border_button.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:client/src/auxiliary/asset_path.dart';
 import 'package:client/src/icon/korea_monkey_icons.dart';
-import 'package:file_picker/file_picker.dart';
-import 'dart:typed_data';
+
+import 'package:client/src/model/thumbnail_editor.dart';
 
 import 'dart:io';
 
@@ -12,7 +13,8 @@ class ThumbnailResizeView extends StatefulWidget {
   @override
   _ThumbnailResizeViewState createState() => _ThumbnailResizeViewState();
 
-  Uint8List? image_data = null;
+  static final double thumbnail_size = 220.0;
+  ThumbnailEditor editor = ThumbnailEditor(size: thumbnail_size);
 }
 
 class ThumbNailMask extends CustomPainter {
@@ -30,7 +32,8 @@ class ThumbNailMask extends CustomPainter {
           height: size.height),
     ));
     path.addOval(Rect.fromCircle(
-        center: Offset(size.width / 2, size.height / 2), radius: 80));
+        center: Offset(size.width / 2, size.height / 2),
+        radius: size.width / 2 - 2));
 
     canvas.drawPath(path, paint);
 
@@ -41,9 +44,11 @@ class ThumbNailMask extends CustomPainter {
       final Path path = Path();
       path.fillType = PathFillType.evenOdd;
       path.addOval(Rect.fromCircle(
-          center: Offset(size.width / 2, size.height / 2), radius: 82));
+          center: Offset(size.width / 2, size.height / 2),
+          radius: size.width / 2));
       path.addOval(Rect.fromCircle(
-          center: Offset(size.width / 2, size.height / 2), radius: 80));
+          center: Offset(size.width / 2, size.height / 2),
+          radius: size.width / 2 - 2));
 
       canvas.drawPath(path, paint);
     }
@@ -56,51 +61,10 @@ class ThumbNailMask extends CustomPainter {
 }
 
 class _ThumbnailResizeViewState extends State<ThumbnailResizeView> {
-  static const double thumbnail_size = 220.0;
-
-  double magnification = 1.0;
-  static const double magnification_step = 0.25;
-  static const double magnification_max = 10.0;
-  static const double magnification_min = 1.0;
-  static const int magnification_division =
-      (magnification_max - magnification_min) ~/ magnification_step;
-
-  double position_x = 0.0;
-  double position_y = 0.0;
-  double position_step = 10.0;
-
-  double start_x = 0.0;
-  double end_x = 0.0;
-  double start_y = 0.0;
-  double end_y = 0.0;
-
-  double original_image_width = thumbnail_size;
-  double original_image_height = thumbnail_size;
-  double image_width = 0.0;
-  double image_height = 0.0;
-
-  void setPosition(double new_x, double new_y) {
-    setState(() {
-      double current_image_width = original_image_width * magnification;
-      double current_image_height = original_image_height * magnification;
-
-      if (new_x >= 0) {
-        position_x = 0;
-      } else if (new_x < thumbnail_size - current_image_width) {
-        position_x = thumbnail_size - current_image_width;
-      } else {
-        position_x = new_x;
-      }
-
-      if (new_y >= 0) {
-        position_y = 0;
-      } else if (new_y < thumbnail_size - current_image_height) {
-        position_y = thumbnail_size - current_image_height;
-      } else {
-        position_y = new_y;
-      }
-
-      print("Position X : $position_x Position Y : $position_y");
+  @override
+  initState() {
+    widget.editor.initialize(() {
+      setState(() {});
     });
   }
 
@@ -132,6 +96,11 @@ class _ThumbnailResizeViewState extends State<ThumbnailResizeView> {
     );
   }
 
+  double start_x = 0.0;
+  double start_y = 0.0;
+  double end_x = 0.0;
+  double end_y = 0.0;
+
   Widget getThumbnailGestureDetector(BuildContext context) {
     return GestureDetector(
       onPanStart: (details) {
@@ -141,64 +110,41 @@ class _ThumbnailResizeViewState extends State<ThumbnailResizeView> {
         print("Start Y : $start_y");
       },
       onPanUpdate: (details) {
+        start_x = end_x;
         end_x = details.localPosition.dx;
         print("End X : $end_x");
+        start_y = end_y;
         end_y = details.localPosition.dy;
         print("End Y : $end_y");
 
-        double distance_x = (end_x - start_x) * 0.1;
-        if (distance_x.abs() <= 2.0) distance_x = 0;
-        var new_position_x = position_x + distance_x;
-
-        double distance_y = (end_y - start_y) * 0.1;
-        if (distance_y.abs() <= 2.0) distance_y = 0;
-        var new_position_y = position_y + distance_y;
-
-        setPosition(new_position_x, new_position_y);
+        widget.editor.setPosition(end_x - start_x, end_y - start_y);
       },
     );
   }
 
+  Widget getThumbnailMouseWheelDetector(BuildContext context, Widget child) {
+    return Listener(
+        onPointerSignal: (pointerSignal) {
+          print("Event OK?");
+          if (pointerSignal is PointerScrollEvent) {
+            var event = pointerSignal as PointerScrollEvent;
+            if (event.scrollDelta.dy > 0.0)
+              widget.editor.downMagnification();
+            else if (event.scrollDelta.dy < 0.0)
+              widget.editor.upMagnification();
+          }
+        },
+        child: child);
+  }
+
   Future<Image> _getImage() async {
-    if (widget.image_data != null) {
-      print("data exists");
-      var decodedImage = await decodeImageFromList(widget.image_data!);
-      original_image_width = decodedImage.width.toDouble();
-      original_image_height = decodedImage.height.toDouble();
-      print(
-          "original image width : $original_image_width original image height : $original_image_height");
+    print("Get Image");
+    //print(widget.editor.data);
 
-      if (original_image_width < thumbnail_size &&
-          original_image_width <= original_image_height) {
-        double ratio = original_image_height / original_image_width;
-        image_width = thumbnail_size * magnification;
-        image_height = thumbnail_size * ratio * magnification;
-      } else if (original_image_height < thumbnail_size &&
-          original_image_width >= original_image_height) {
-        double ratio = original_image_width / original_image_height;
-        image_height = thumbnail_size * magnification;
-        image_width = thumbnail_size * ratio * magnification;
-      } else {
-        image_width = original_image_width * magnification;
-        image_height = original_image_height * magnification;
-      }
-      return Image.memory(
-        widget.image_data!,
-        width: image_width,
-        height: image_height,
-        fit: BoxFit.fill,
-      );
-    }
-
-    print("data doesn't exists");
-    original_image_width = thumbnail_size;
-    original_image_height = thumbnail_size;
-    image_width = original_image_width * magnification;
-    image_height = original_image_height * magnification;
-    return Image.asset(
-      "image/test/thumbnail1.png",
-      width: image_width,
-      height: image_width,
+    return Image.memory(
+      widget.editor.data,
+      width: widget.editor.width,
+      height: widget.editor.height,
       fit: BoxFit.fill,
     );
   }
@@ -210,30 +156,31 @@ class _ThumbnailResizeViewState extends State<ThumbnailResizeView> {
         if (snapshot.hasData) {
           return snapshot.data!;
         }
+
         print("Image Waiting...");
-        image_width = original_image_width * magnification;
-        image_height = original_image_height * magnification;
         return Image.asset(
-          "image/test/thumbnail6.png",
-          width: image_width,
-          height: image_width,
+          "image/test/thumbnail1.png",
+          width: ThumbnailResizeView.thumbnail_size,
+          height: ThumbnailResizeView.thumbnail_size,
           fit: BoxFit.fill,
         );
       },
     );
 
     return Container(
-        width: thumbnail_size,
-        height: thumbnail_size,
-        child: Stack(children: [
-          Positioned(
-            left: position_x,
-            top: position_y,
-            child: futureImage,
-          ),
-          getThumbnailMaskView(context, thumbnail_size),
-          getThumbnailGestureDetector(context),
-        ]));
+        width: ThumbnailResizeView.thumbnail_size,
+        height: ThumbnailResizeView.thumbnail_size,
+        child: getThumbnailMouseWheelDetector(
+            context,
+            Stack(children: [
+              Positioned(
+                left: widget.editor.x,
+                top: widget.editor.y,
+                child: futureImage,
+              ),
+              getThumbnailMaskView(context, ThumbnailResizeView.thumbnail_size),
+              getThumbnailGestureDetector(context),
+            ])));
   }
 
   Widget getSliderView(BuildContext context) {
@@ -244,38 +191,23 @@ class _ThumbnailResizeViewState extends State<ThumbnailResizeView> {
         CircleBorderButton(
             size: 25,
             child: Icon(KoreaMonkey.minus, color: Colors.white, size: 22),
-            onPressed: () {
-              setState(() {
-                if (magnification > magnification_max)
-                  magnification -= magnification_step;
-                setPosition(position_x, position_y);
-              });
-            }),
+            onPressed: widget.editor.downMagnification),
         Slider(
-            inactiveColor: Colors.white.withOpacity(0.5),
-            activeColor: Colors.white70,
-            thumbColor: Colors.white,
-            value: magnification,
-            min: magnification_min,
-            max: magnification_max,
-            divisions: magnification_division,
-            label: magnification.toString(),
-            onChanged: (double value) {
-              setState(() {
-                magnification = value;
-                setPosition(position_x, position_y);
-              });
-            }),
+          inactiveColor: Colors.white.withOpacity(0.5),
+          activeColor: Colors.white70,
+          thumbColor: Colors.white,
+          value: widget.editor.magnification,
+          min: widget.editor.magnification_min,
+          max: widget.editor.magnification_max,
+          divisions: widget.editor.magnification_division,
+          label: widget.editor.magnification.toString(),
+          onChanged: widget.editor.changeMagnification,
+        ),
         CircleBorderButton(
-            size: 25,
-            child: Icon(KoreaMonkey.plus, color: Colors.white, size: 22),
-            onPressed: () {
-              setState(() {
-                if (magnification < magnification_max)
-                  magnification += magnification_step;
-                setPosition(position_x, position_y);
-              });
-            }),
+          size: 25,
+          child: Icon(KoreaMonkey.plus, color: Colors.white, size: 22),
+          onPressed: widget.editor.upMagnification,
+        ),
       ],
     ));
   }
@@ -287,19 +219,7 @@ class _ThumbnailResizeViewState extends State<ThumbnailResizeView> {
         data: "찾기",
         padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
         fontSize: 20.0,
-        onPressed: () async {
-          FilePickerResult? result = await FilePicker.platform
-              .pickFiles(allowMultiple: false, type: FileType.image);
-
-          if (result != null) {
-            print("Result is Not NULL!");
-
-            var decoded_data = result.files.first.bytes;
-            setState(() {
-              widget.image_data = decoded_data;
-            });
-          }
-        },
+        onPressed: widget.editor.find,
       ),
     );
   }
