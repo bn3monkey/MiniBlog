@@ -32,3 +32,7 @@ sudo apt install postgresql postgresql-contrib
 10. psql -h localhost -p 5432 -d postgres -U postgres (postgres란 DB의 유저이름 postgres이며 로컬호스트의 5432 포트로 접속)
 
 11. QuickDBD를 이용하여 Diagram 생성
+
+12. SQL 관련 batch 파일과 sql 파일로 postgresql 서버에 DB 생성
+
+13. UI 보고 API 명세서 만들어야 함
