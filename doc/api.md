@@ -1,39 +1,101 @@
 # 미니 블로그 서버 API
 
 - [미니 블로그 서버 API](#미니-블로그-서버-api)
-  - [API 목록](#api-목록)
+  - [게시물 관련 API 목록](#게시물-관련-api-목록)
     - [`GET /`](#get-)
+      - [Request Body](#request-body)
+      - [Response Body](#response-body)
     - [`GET /post?search_query="검색내용"`](#get-postsearch_query검색내용)
-    - [`GET /login/`](#get-login)
-    - [`POST /login/`](#post-login)
-    - [`GET /signup/`](#get-signup)
-    - [`POST /signup/`](#post-signup)
-    - [`GET /resize/`](#get-resize)
-    - [`POST /resize/`](#post-resize)
-    - [`GET /password-find/`](#get-password-find)
-    - [`POST /password-find`](#post-password-find)
+      - [Request Body](#request-body-1)
+      - [Response Body](#response-body-1)
+    - [`GET /post/:id`](#get-postid)
+      - [Request Body](#request-body-2)
+      - [Response Body](#response-body-2)
+    - [`GET /post/:id/thumbnail`](#get-postidthumbnail)
+      - [Request Body](#request-body-3)
+      - [Response Body](#response-body-3)
+    - [`POST /post`](#post-post)
+      - [Request Body](#request-body-4)
+      - [Response Body](#response-body-4)
+    - [`PUT /post/:id`](#put-postid)
+      - [Request Body](#request-body-5)
+      - [Response Body](#response-body-5)
+    - [`DELETE /post/:id`](#delete-postid)
+      - [Request Body](#request-body-6)
+      - [Response Body](#response-body-6)
+  - [유저 관련 API 목록](#유저-관련-api-목록)
     - [`GET /user/:id`](#get-userid)
-    - [`PUT /info/:id`](#put-infoid)
-    - [`GET POST/:id`](#get-postid)
-    - [`](#)
+      - [Request Body](#request-body-7)
+      - [Response Body](#response-body-7)
+    - [`GET /user/:id/thumbnail`](#get-useridthumbnail)
+      - [Request Body](#request-body-8)
+      - [Response Body](#response-body-8)
+    - [`PATCH /user/:id`](#patch-userid)
+      - [Request Body](#request-body-9)
+      - [Response Body](#response-body-9)
+    - [`POST /login`](#post-login)
+      - [Request Body](#request-body-10)
+      - [Response Body](#response-body-10)
+    - [`POST /signup/`](#post-signup)
+      - [Request Body](#request-body-11)
+      - [Response Body](#response-body-11)
+    - [`POST /password-find`](#post-password-find)
+      - [Request Body](#request-body-12)
+      - [Response Body](#response-body-12)
 
-## API 목록
+## 게시물 관련 API 목록
 
 ### `GET /`
 
-초기 페이지를 요청합니다.
-3가지 경우로 나뉩니다.
+#### Request Body
 
-1. 로그인되지 않은 경우
-2. 로그인된 경우
-3. 관리자인 경우
+```json
+```
+
+#### Response Body
+
+```json
+```
+
+초기 페이지를 요청합니다.
 
 ### `GET /post?search_query="검색내용"`
 
-게시물 목록을 보여줍니다. 제목에 검색 내용이 일부 포함되어 있는 자료만 보여줍니다.
+#### Request Body
 
-body에
-section과 tag 정보를 추가한다.
+```json
+{
+  "section" : ["1", "2"],
+  "tag" : ["1", "2"],
+}
+```
+
+#### Response Body
+
+```json
+{
+  "posts" : [
+    {
+      "name" : "",
+      "section" : "",
+      "tag" : ["1", "2"],
+      "creation-date" : 2021-08-23-13:30:28,
+      "views" : 23,
+      "thumbnail" : "image_url"
+    },
+    {
+      "name" : "",
+      "section" : "",
+      "tag" : ["1", "2"],
+      "creation-date" : 2021-08-23-13:30:28,
+      "views" : 23,
+      "thumbnail" : "image_url"
+    }
+  ]
+}
+```
+
+게시물 목록을 보여줍니다. 제목에 검색 내용이 일부 포함되어 있는 자료만 보여줍니다.
 
 로그인되지 않은 경우와 로그인된 경우 모두 게시물을 보여줍니다.
 
@@ -41,54 +103,235 @@ section과 tag 정보를 추가한다.
 
 로그인되지 않은 경우는 유저 아이콘을 클릭할 때, login 화면이 보여야 하고 로그인된 경우에는 info(유저 정보 변경) 화면이 보여야 합니다.
 
-### `GET /login/`
+### `GET /post/:id`
 
-login 화면을 요청합니다.
+#### Request Body
 
-### `POST /login/`
+```json
+```
+
+
+#### Response Body
+
+```json
+{
+  "id" : 10,
+  "name" : "NAME",
+  "views" : 23,
+  "creation_date" : 2021-08-27 13:04:30,
+  "thumbnail" : "URL",
+  "content" : "",
+}
+```
+
+게시글 화면을 보여줍니다.
+
+로그인되지 않은 경우와 로그인된 경우 모두 게시물을 보여줍니다.
+관리자인 경우, 글쓰기 버튼이 나오도록 해야합니다.
+
+:id 에 들어갈 내용은 user id 입니다.
+
+### `GET /post/:id/thumbnail`
+
+#### Request Body
+
+```json
+```
+
+#### Response Body
+
+```json
+---
+thumbnail 이미지
+```
+
+해당 게시물의 thumbnail 이미지를 가져옵니다.
+
+### `POST /post`
+
+#### Request Body
+
+```json
+{
+  "name" : "NAME",
+  "content" : "",
+}
+---
+thumbnail 이미지
+```
+
+#### Response Body
+
+```json
+```
+
+게시글을 생성합니다.
+세션에 해당하는 유저가 관리자 권한을 가지고 있어야지만, 해당 요청이 받아들여집니다.
+
+### `PUT /post/:id`
+
+#### Request Body
+
+```json
+{
+  "name" : "NAME",
+  "content" : "",
+}
+---
+thumbnail 이미지
+```
+
+#### Response Body
+
+```json
+```
+
+게시글을 수정합니다.
+세션에 해당하는 유저가 관리자 권한을 가지고 있어야지만, 해당 요청이 받아들여집니다.
+
+### `DELETE /post/:id`
+
+#### Request Body
+
+```json
+```
+
+#### Response Body
+
+```json
+```
+
+해당 id의 게시글을 삭제합니다.
+세션에 해당하는 유저가 관리자 권한을 가지고 있어야지만, 해당 요청이 받아들여집니다.
+
+## 유저 관련 API 목록
+
+### `GET /user/:id`
+
+#### Request Body
+
+```json
+```
+
+#### Response Body
+
+```json
+{
+  "id" : 유저_ID,
+  "e-mail" : 유저_EMAIL,
+  "name" : 유저_별명,
+  "thumbnail" : 썸네일_URL,
+}
+```
+
+해당 유저의 정보를 가져옵니다.
+
+### `GET /user/:id/thumbnail`
+
+#### Request Body
+
+```json
+```
+
+#### Response Body
+
+```
+Thumbnail 이미지
+```
+
+해당 유저의 썸네일 이미지를 가져옵니다.
+
+
+### `PATCH /user/:id`
+
+#### Request Body
+
+```json
+{
+  "e-mail" : ""
+}
+---
+thumbnail 이미지
+```
+
+해당 유저의 썸네일을 수정합니다.
+세션이 접속한 유저와 일치하지 않으면, 거절합니다.
+
+
+#### Response Body
+
+```json
+{
+}
+```
+
+해당 유저의 thumbnail 이미지와 새 비밀번호를 변경합니다.
+세션에 해당하는 유저 id가 아니라면 거절합니다.
+
+### `POST /login`
+
+#### Request Body
+
+```json
+{
+  "e-mail" : "",
+  "password" : "", // 어느 정도 암호화해서 가야되나?
+}
+```
+
+#### Response Body
+
+```json
+{
+  "id" : "",
+}
+```
 
 login 요청을 하고 유저 세션을 가져옵니다.
-body에 id와 password를 추가합니다.
+body에 e-mail와 password를 추가합니다.
 
-### `GET /signup/`
+Response로 info 화면에 접속할 떄 사용하는 id를 받습니다.
 
-회원가입 화면을 요청 합니다.
 
 ### `POST /signup/`
+
+#### Request Body
+
+```json
+{
+  "e-mail" : "",
+  "name" : "",
+  "password" : "", // 어느 정도 암호화해서 가야되나?
+}
+```
+---
+thumbnail 파일 multi 뭐시기로
+
+#### Response Body
+
+```json
+{
+}
+```
 
 회원가입을 시도합니다.
 body에 email, 이름, 비밀번호, 썸네일 이미지가 포함되어 갑니다.
 
-### `GET /resize/`
-
-회원가입 창에서 얼굴 사진을 조절하는 화면을 가져옵니다.
-
-### `POST /resize/`
-
-회원가입 화면으로 돌아갑니다.
-등록한 thumbnail 그림은 클라이언트에서 가지고 있도록 합니다.
-
-### `GET /password-find/`
-
-비밀번호 찾기 화면을 요청합니다.
-
 ### `POST /password-find`
 
-body에 이메일 주소를 넣습니다.
-이메일로 새 비밀번호를 넣었다는 화면을 보여줍니다.
+#### Request Body
 
-### `GET /user/:id`
+```json
+{
+  "e-mail" : ""
+}
+```
 
-유저 정보 수정 화면을 보여준다.
+#### Response Body
 
-### `PUT /info/:id`
+```json
+{
+}
+```
 
-body에 thumbnail 이미지와 새 비밀번호를 넣습니다.
-
-유저 정보를 변경합니다.
-
-### `GET POST/:id`
-
-게시글 화면을 보여줍니다.
-
-### `
+서버에 해당 e-mail 주소로 새로 변경된 password를 보내도록 요청합니다.
