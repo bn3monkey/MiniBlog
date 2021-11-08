@@ -23,25 +23,51 @@
     - [`DELETE /post/:id`](#delete-postid)
       - [Request Body](#request-body-6)
       - [Response Body](#response-body-6)
-  - [유저 관련 API 목록](#유저-관련-api-목록)
-    - [`GET /user/:id`](#get-userid)
+  - [댓글 관련 API 목록](#댓글-관련-api-목록)
+    - [`GET /comment/`](#get-comment)
       - [Request Body](#request-body-7)
       - [Response Body](#response-body-7)
-    - [`GET /user/:id/thumbnail`](#get-useridthumbnail)
+    - [`POST /comment/`](#post-comment)
       - [Request Body](#request-body-8)
       - [Response Body](#response-body-8)
-    - [`PATCH /user/:id`](#patch-userid)
+    - [`PUT /comment/:id`](#put-commentid)
       - [Request Body](#request-body-9)
       - [Response Body](#response-body-9)
-    - [`POST /login`](#post-login)
-      - [Request Body](#request-body-10)
-      - [Response Body](#response-body-10)
-    - [`POST /signup/`](#post-signup)
+    - [`DELETE /comment/:id`](#delete-commentid)
+    - [Request Body](#request-body-10)
+    - [Rsponse Body](#rsponse-body)
+  - [대댓글 관련 API 목록](#대댓글-관련-api-목록)
+    - [`GET /reply/`](#get-reply)
       - [Request Body](#request-body-11)
-      - [Response Body](#response-body-11)
-    - [`POST /password-find`](#post-password-find)
+      - [Response Body](#response-body-10)
+    - [`POST /reply/`](#post-reply)
       - [Request Body](#request-body-12)
+      - [Response Body](#response-body-11)
+    - [`PUT /reply/:id`](#put-replyid)
+      - [Request Body](#request-body-13)
       - [Response Body](#response-body-12)
+    - [`DELETE /reply/:id`](#delete-replyid)
+    - [Request Body](#request-body-14)
+    - [Rsponse Body](#rsponse-body-1)
+  - [유저 관련 API 목록](#유저-관련-api-목록)
+    - [`GET /user/:id`](#get-userid)
+      - [Request Body](#request-body-15)
+      - [Response Body](#response-body-13)
+    - [`GET /user/:id/thumbnail`](#get-useridthumbnail)
+      - [Request Body](#request-body-16)
+      - [Response Body](#response-body-14)
+    - [`PATCH /user/:id`](#patch-userid)
+      - [Request Body](#request-body-17)
+      - [Response Body](#response-body-15)
+    - [`POST /login`](#post-login)
+      - [Request Body](#request-body-18)
+      - [Response Body](#response-body-16)
+    - [`POST /signup/`](#post-signup)
+      - [Request Body](#request-body-19)
+      - [Response Body](#response-body-17)
+    - [`POST /password-find`](#post-password-find)
+      - [Request Body](#request-body-20)
+      - [Response Body](#response-body-18)
 
 ## 게시물 관련 API 목록
 
@@ -203,6 +229,199 @@ thumbnail 이미지
 
 해당 id의 게시글을 삭제합니다.
 세션에 해당하는 유저가 관리자 권한을 가지고 있어야지만, 해당 요청이 받아들여집니다.
+
+## 댓글 관련 API 목록
+
+### `GET /comment/`
+
+#### Request Body
+
+```json
+{
+  "post_id" : 23
+}
+```
+
+#### Response Body
+
+```json
+{
+  "comments" : [
+    {
+      "id" : 34,
+      "user" : {
+        "id" : 21,
+        "name" : 이름,
+        "thumbnail" : 썸네일 이미지 주소
+      },
+      "creation-date" : 생성일자,
+      "content" : 글자,
+    },
+    {
+      "id" : 23,
+      "user" : {
+        "id" : 22,
+        "name" : 이름,
+        "thumbnail" : 썸네일 이미지 주소
+      },
+      "creation-date" : 생성일자,
+      "content" : 내용,
+    }
+  ]
+}
+```
+
+post id에 해당하는 게시글에 있는 모든 댓글을 가져옵니다.
+
+### `POST /comment/`
+
+#### Request Body
+
+```json
+{
+  "post_id" : 22,
+  "user" : {
+    "id" : 21,
+  },
+  "content" : 글자,
+},
+```
+
+#### Response Body
+
+```json
+```
+
+게시글에 댓글을 추가합니다.
+
+### `PUT /comment/:id`
+
+#### Request Body
+
+```json
+{
+  "user" : {
+    "id" : 21,
+  },
+  "content" : 글자,
+},
+```
+
+#### Response Body
+
+```json
+```
+
+해당 id의 댓글을 수정합니다. 해당 세션의 유저 아이디와 댓글의 유저 아이디가 맞을 때만 유효하게 변경될 수 있습니다.
+
+### `DELETE /comment/:id`
+
+### Request Body
+```
+```
+
+### Rsponse Body
+```
+```
+
+댓글을 삭제합니다.
+
+
+## 대댓글 관련 API 목록
+
+### `GET /reply/`
+
+#### Request Body
+
+```json
+{
+  "comment_id" : 23
+}
+```
+
+#### Response Body
+
+```json
+{
+  "comments" : [
+    {
+      "id" : 34,
+      "user" : {
+        "id" : 21,
+        "name" : 이름,
+        "thumbnail" : 썸네일 이미지 주소
+      },
+      "creation-date" : 생성일자,
+      "content" : 글자,
+    },
+    {
+      "id" : 23,
+      "user" : {
+        "id" : 22,
+        "name" : 이름,
+        "thumbnail" : 썸네일 이미지 주소
+      },
+      "creation-date" : 생성일자,
+      "content" : 내용,
+    }
+  ]
+}
+```
+
+post id에 해당하는 댓글에 있는 모든 대댓글을 가져옵니다.
+
+### `POST /reply/`
+
+#### Request Body
+
+```json
+{
+  "comment_id" : 22,
+  "user" : {
+    "id" : 21,
+  },
+  "content" : 글자,
+},
+```
+
+#### Response Body
+
+```json
+```
+
+게시글에 대댓글을 추가합니다.
+
+### `PUT /reply/:id`
+
+#### Request Body
+
+```json
+{
+  "user" : {
+    "id" : 21,
+  },
+  "content" : 글자,
+},
+```
+
+#### Response Body
+
+```json
+```
+
+해당 id의 대댓글을 수정합니다. 해당 세션의 유저 아이디와 댓글의 유저 아이디가 맞을 때만 유효하게 변경될 수 있습니다.
+
+### `DELETE /reply/:id`
+
+### Request Body
+```
+```
+
+### Rsponse Body
+```
+```
+
+대댓글을 삭제합니다.
 
 ## 유저 관련 API 목록
 
