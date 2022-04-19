@@ -1,0 +1,9 @@
+{
+    "host" : "127.0.0.1",
+    "user" : "bn3monkey",
+    "database" : "mini_blog",
+    "port" : 5432,
+    "ssl" : {
+        "rejectUnauthorized" : false
+    }
+}

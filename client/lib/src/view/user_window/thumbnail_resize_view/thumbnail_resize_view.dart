@@ -195,7 +195,7 @@ class _ThumbnailResizeViewState extends State<ThumbnailResizeView> {
         Slider(
           inactiveColor: Colors.white.withOpacity(0.5),
           activeColor: Colors.white70,
-          thumbColor: Colors.white,
+          //thumbColor: Colors.white,
           value: widget.editor.magnification,
           min: widget.editor.magnification_min,
           max: widget.editor.magnification_max,

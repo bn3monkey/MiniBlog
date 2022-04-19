@@ -49,3 +49,13 @@ CREATE DATABASE mini_blog with owner bn3monkey;
 14. SQL 관련 batch 파일과 sql 파일로 postgresql 서버에 DB 생성
 
 15. UI 보고 API 명세서 만들어야 함
+
+16. server container에서 express 설치
+```bash
+npm install express --save
+```
+
+17. server container에서 pg (postgresql client) 설치
+```bash
+npm install pg --save
+```

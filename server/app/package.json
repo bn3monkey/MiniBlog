@@ -1,0 +1,26 @@
+{
+  "name": "miniblog_server",
+  "version": "1.0.0",
+  "description": "the server application of bn3monkey's mini blog",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bn3monkey/mini_blog.git"
+  },
+  "keywords": [
+    "bn3monkey"
+  ],
+  "author": "bn3monkey",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bn3monkey/mini_blog/issues"
+  },
+  "homepage": "https://github.com/bn3monkey/mini_blog#readme",
+  "dependencies": {
+    "express": "^4.17.3",
+    "pg": "^8.7.3"
+  }
+}
