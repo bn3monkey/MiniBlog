@@ -1,0 +1,10 @@
+DATABASE_NAME=mini_blog
+USER=bn3monkey
+PASSWORD=`cat password`
+PORT=5432
+
+ROOT_DATABASE_NAME=postgres
+ROOT_USER=postgres
+ROOT_PASSWORD=`cat superuser_password`
+
+PGPASSWORD=$ROOT_PASSWORD psql -h localhost -U $ROOT_USER -d $ROOT_DATABASE_NAME -p $PORT -c "DROP DATABASE $DATABASE_NAME"

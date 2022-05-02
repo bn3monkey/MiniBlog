@@ -59,3 +59,30 @@ npm install express --save
 ```bash
 npm install pg --save
 ```
+
+18. server container에서 pg (express 세션 기능) 설치
+```bash
+npm install express-session --save
+```
+
+19. server container에서 pg (postgressql를 이용한 세션) 설치
+```bash
+npm install express-pg-session --save
+```
+
+20. server container에서 multer 설치 (이미지 저장 관련 모듈)
+```bash
+npm install multer --save
+```
+
+21. server container에서 bcrypt 설치 (비밀번호 암호화 모듈)
+```bash
+npm install bcrpyt --save
+```
+
+22. sh가 안 되면 개행문자 제거하는거 찾아보자
+```
+seb -i 
+```
+
+23. postman을 다운로드받아서 rest api 테스트를 할 수 잇따.
