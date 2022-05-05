@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "connect-pg-simple": "^7.0.0"
+  }
+}

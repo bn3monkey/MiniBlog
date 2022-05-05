@@ -85,4 +85,15 @@ npm install bcrpyt --save
 seb -i 
 ```
 
-23. postman을 다운로드받아서 rest api 테스트를 할 수 잇따.
+23. postman을 다운로드받아서 rest api 테스트를 할 수 있다.
+
+24. server container에서 pg를 위한 session table sql을 받는다.
+```bash
+npm install connect-pg-simple --save
+```
+
+25. post 보낼 때 body에 있는 내용을 분석하기 위해 bodyParser를 받는다.
+body Parser 안 써도 되는듯
+```bash
+npm install body-parser --save
+```
