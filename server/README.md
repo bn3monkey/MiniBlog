@@ -82,7 +82,7 @@ npm install bcrpyt --save
 
 22. sh가 안 되면 개행문자 제거하는거 찾아보자
 ```
-seb -i 
+sed -i 's/\r$//' access_root.sh access.sh create_session.sh create.sh delete.sh
 ```
 
 23. postman을 다운로드받아서 rest api 테스트를 할 수 있다.
