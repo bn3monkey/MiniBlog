@@ -1,23 +1,11 @@
 
-const path = require('path');
-
-const multer = require('multer')
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, path.resolve(__dirname, '../profile'))
-    },
-    filename: function (req, file, cb) {
-      cb(null, file.fieldname + '-' + Date.now())
-    }
-  })
-
-const profile = multer({storage : storage})
 const encryptor = require('bcrypt');
 const { closeComplete } = require('pg-protocol/dist/messages');
 const express = require('express')
 const router = express.Router()
 
 const db = require('../db/db')
+const profile = require('../db/profile')
 
 
 uploadProfile = profile.single('profile')
