@@ -5,11 +5,14 @@ const app = express();
 const signupRouter = require('./routes/signup')
 const loginRouter = require('./routes/login')
 const userRouter = require('./routes/user')
+const postRouter = require('./routes/post')
 
-app.use('profile', express.static('profile'))
+app.use('profile', express.static('./image/profile'))
+app.use('thumbnail', express.static('./image/thumbnail'))
 app.use('/', signupRouter)
 app.use('/', loginRouter)
 app.use('/', userRouter)
+app.use('/', postRouter)
 
 
 const port = "8080"

@@ -1,4 +1,4 @@
 node_modules/
 config/dbpassword.json
 config/sessionpassword.json
-profile/
+image/profile/
