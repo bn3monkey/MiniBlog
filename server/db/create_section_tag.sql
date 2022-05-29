@@ -9,7 +9,7 @@ INSERT INTO Section (name)
 
 INSERT INTO Tag (name)
     values 
-     ('C++'),
+     ('Cpp'),
      ('Kotlin'),
      ('드럼'),
      ('작곡'),
